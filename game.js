@@ -8,6 +8,20 @@ const mikoIsWaiting = document.getElementById('mikoIsWaiting')
 const mikoIsStunned = document.getElementById('mikoIsStunned')
 const mikoIsHappy = document.getElementById('mikoIsHappy')
 
+import HappyImg1 from '/assets/image/miko/happy/happy1.png'
+import HappyImg2 from '/assets/image/miko/happy/happy2.png'
+import HappyImg3 from '/assets/image/miko/happy/happy3.png'
+import InspirationImg1 from '/assets/image/miko/inspiration/inspiration1.png'
+import InspirationImg2 from '/assets/image/miko/inspiration/inspiration2.png'
+import InspirationImg3 from '/assets/image/miko/inspiration/inspiration3.png'
+
+import HappyAudio1 from 'assets/audio/happy/happy1.mp3'
+import HappyAudio2 from 'assets/audio/happy/happy2.mp3'
+import HappyAudio3 from 'assets/audio/happy/happy3.mp3'
+import InspirationAudio1 from 'assets/audio/inspiration/inspiration1.mp3'
+import InspirationAudio2 from 'assets/audio/inspiration/inspiration2.mp3'
+import InspirationAudio3 from 'assets/audio/inspiration/inspiration3.mp3'
+
 
 //программа для дочи
 const chars = [
@@ -23,6 +37,20 @@ const chars = [
     '0', '1', '2', '3', '4', '5', '6', '7', '8', '9'
 ];
 
+const mikoData = {
+    mikoHappy: [
+        {id: 1, img: HappyImg1, audio: HappyAudio1},
+        {id: 2, img: HappyImg2, audio: HappyAudio2},
+        {id: 3, img: HappyImg3, audio: HappyAudio3},
+    ],
+    mikoInspiration: [
+        {id:1, img: InspirationImg1, audio: InspirationAudio1},
+        {id:2, img: InspirationImg2, audio: InspirationAudio2},
+        {id:3, img: InspirationImg3, audio: InspirationAudio3},
+    ],
+    mikoWaiting: ''
+}
+
 mikoIsWaiting.style.display = 'none'
 mikoIsStunned.style.display = 'none'
 mikoIsHappy.style.display = 'none'
@@ -31,6 +59,7 @@ const randomChar = (arr) => {
     const randomIndex = Math.floor(Math.random() * arr.length);
     return arr[randomIndex];
 }
+
 
 let randomNumber = randomChar(chars);
 currentChar.textContent = randomNumber;
