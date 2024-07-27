@@ -8,19 +8,6 @@ const mikoIsWaiting = document.getElementById('mikoIsWaiting')
 const mikoIsStunned = document.getElementById('mikoIsStunned')
 const mikoIsHappy = document.getElementById('mikoIsHappy')
 
-import HappyImg1 from '/assets/image/miko/happy/happy1.png'
-import HappyImg2 from '/assets/image/miko/happy/happy2.png'
-import HappyImg3 from '/assets/image/miko/happy/happy3.png'
-import InspirationImg1 from '/assets/image/miko/inspiration/inspiration1.png'
-import InspirationImg2 from '/assets/image/miko/inspiration/inspiration2.png'
-import InspirationImg3 from '/assets/image/miko/inspiration/inspiration3.png'
-
-import HappyAudio1 from 'assets/audio/happy/happy1.mp3'
-import HappyAudio2 from 'assets/audio/happy/happy2.mp3'
-import HappyAudio3 from 'assets/audio/happy/happy3.mp3'
-import InspirationAudio1 from 'assets/audio/inspiration/inspiration1.mp3'
-import InspirationAudio2 from 'assets/audio/inspiration/inspiration2.mp3'
-import InspirationAudio3 from 'assets/audio/inspiration/inspiration3.mp3'
 
 
 //программа для дочи
@@ -39,14 +26,17 @@ const chars = [
 
 const mikoData = {
     mikoHappy: [
-        {id: 1, img: HappyImg1, audio: HappyAudio1},
-        {id: 2, img: HappyImg2, audio: HappyAudio2},
-        {id: 3, img: HappyImg3, audio: HappyAudio3},
+        {id: 1, srcImg: '/assets/image/miko/happy/happy1.png', srcAudio: 'assets/audio/happy/happy1.mp3'},
+        {id: 2, srcImg: '/assets/image/miko/happy/happy2.png', srcAudio: 'assets/audio/happy/happy2.mp3'},
+        {id: 3, srcImg: '/assets/image/miko/happy/happy3.png', srcAudio: 'assets/audio/happy/happy3.mp3'},
+        {id: 4, srcImg: '/assets/image/miko/happy/happy4.png', srcAudio: 'assets/audio/happy/happy4.mp3'},
+        {id: 5, srcImg: '/assets/image/miko/happy/happy5.png', srcAudio: 'assets/audio/happy/happy5.mp3'},
+        {id: 6, srcImg: '/assets/image/miko/happy/happy6.png', srcAudio: 'assets/audio/happy/happy6.mp3'},
     ],
     mikoInspiration: [
-        {id:1, img: InspirationImg1, audio: InspirationAudio1},
-        {id:2, img: InspirationImg2, audio: InspirationAudio2},
-        {id:3, img: InspirationImg3, audio: InspirationAudio3},
+        {id:1, srcImg: '/assets/image/miko/inspiration/inspiration1.png', srcAudio: 'assets/audio/inspiration/inspiration1.mp3'},
+        {id:2, srcImg: '/assets/image/miko/inspiration/inspiration2.png', srcAudio: 'assets/audio/inspiration/inspiration2.mp3'},
+        {id:3, srcImg: '/assets/image/miko/inspiration/inspiration3.png', srcAudio: 'assets/audio/inspiration/inspiration3.mp3'},
     ],
     mikoWaiting: ''
 }
@@ -54,6 +44,13 @@ const mikoData = {
 mikoIsWaiting.style.display = 'none'
 mikoIsStunned.style.display = 'none'
 mikoIsHappy.style.display = 'none'
+
+
+const randomSrc = (isImg) => {
+    const isHappy = isImg ? mikoData.mikoHappy.length : mikoData.mikoInspiration.length
+    const randomIndex = Math.floor(Math.random() * isHappy);
+    return isImg ? mikoData.mikoHappy[randomIndex] : mikoData.mikoInspiration[randomIndex]
+}
 
 const randomChar = (arr) => {
     const randomIndex = Math.floor(Math.random() * arr.length);
@@ -106,9 +103,14 @@ function addDescription() {
 
 // реагируем негативное событие
 function negativeEvent(key) {
+    let srcTest = randomSrc(false)
+
     lockKeyboard()
     clearTimeout(timeoutId)
     const newLetterElement = document.createElement('div');
+    const audio = new Audio(srcTest.srcAudio);
+    mikoIsStunned.src = srcTest.srcImg
+    audio.play()
     gameContainer.classList.add('red');
     mikoIsWaiting.style.display = 'none'
     mikoIsStunned.style.display = 'block'
@@ -121,14 +123,18 @@ function negativeEvent(key) {
         gameContainer.classList.remove('red');
         mikoIsWaiting.style.display = 'block'
         mikoIsStunned.style.display = 'none'
-    }, 1000)
+    }, 3000)
 }
 
 // реагируем положительное событие
 function positiveEvent(key) {
+    let srcTest = randomSrc(true)
+    const audio = new Audio(srcTest.srcAudio);
     lockKeyboard()
     clearTimeout(timeoutId)
     const newLetterElement = document.createElement('div');
+    mikoIsHappy.src = srcTest.srcImg
+    audio.play()
     gameContainer.classList.add('green');
     newLetterElement.textContent = key;
     mikoIsWaiting.style.display = 'none'
@@ -365,7 +371,7 @@ function positiveEvent(key) {
             },
             "retina_detect": true
         });
-    }, 5000)
+    }, 4000)
 }
 
 addDescription()
